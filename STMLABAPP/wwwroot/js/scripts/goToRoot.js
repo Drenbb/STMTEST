@@ -1,19 +1,18 @@
-function goToRootDir(path) {
+function goToRootDir(path,orderBy) {
     console.log(decodeURI(path));
-    debugger
-    // const buttonElements = document.getElementById('btnGoToRoot');
-    // const rootPath = buttonElements.getAttribute('data-id');
+    const findDirectoryDto = {
+        path: decodeURI(path),
+        orderByDesc: orderBy
+    };
     fetch('/Dirictory/Index', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(decodeURI(path))
+        body: JSON.stringify(findDirectoryDto)
     })
         .then(response => response.text())
         .then(data => {
             document.getElementById('frame').innerHTML = data;
         });
 }
-
-// document.getElementById('btnGoToRoot').addEventListener('click', goToRoot);

@@ -28,8 +28,7 @@
                         <progress value="@disk.BusySize" max="@disk.TotalSize"></progress>
                     </div>
                     <div class="row">
-                        <label>@disk.TotalSize</label>
-                        <label>@disk.BusySize</label>
+                        <label>@disk.BusySize @disk.TotalSize</label>
                     </div>
                 </div>
             </button>
@@ -45,14 +44,16 @@
 <script>
   function goToRoot(path) {
       console.log(path);
-          // const buttonElements = document.getElementById('btnGoToRoot');
-          // const rootPath = buttonElements.getAttribute('data-id');
+      const findDirectoryDto = {
+                 path: decodeURI(path),
+                 //orderByDesc: 'value2'
+             };
       fetch('/Dirictory/Index', {
           method: 'POST',
           headers: {
               'Content-Type': 'application/json'
           },
-          body: JSON.stringify(path)
+          body: JSON.stringify(findDirectoryDto)
       })
       .then(response => response.text())
       .then(data => {

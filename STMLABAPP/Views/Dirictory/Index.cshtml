@@ -6,7 +6,12 @@
 
 <h1>@Model.DirectoryName</h1>
 <h2>@Model.DirectorySize</h2>
-
+@if (@Model.PrevPath != null)
+{
+    <input type="button" value="Назад" onclick="goToRootDir('@Model.PrevPathCode',false)"></input>
+}
+<input type="button" value="Сортировать по убыванию" onclick="goToRootDir('@Model.DirectoryNameCode',true)"></input>
+<input type="button" value="Сортировать по возрастанию" onclick="goToRootDir('@Model.DirectoryNameCode',false)"></input>
 <style>
     .table-container {
         max-height: 400px; /* Задайте максимальную высоту контейнера */
@@ -30,7 +35,7 @@
         <tr>
             <th>Content Name</th>
             <th>Content Type</th>
-            <th onclick="" >Content Size</th>
+            <th>Content Size</th>
         </tr>
         </thead>
         <tbody>
@@ -52,7 +57,7 @@
                     <td>@dir.ContentSize</td>
                 </tr>
             }
-            
+
         }
         </tbody>
     </table>

@@ -8,6 +8,6 @@ namespace STMLABAPP.Interfaces
     public interface IDiskExplorerService
     {
         Task<List<DiskInfoDto>> CheckDiskSize();
-        Task<DirectoryInfoDto> GetDirectoryInfo(string path);
+        Task<DirectoryInfoDto> GetDirectoryInfo(FindDirectoryDto dto);
     }
 }

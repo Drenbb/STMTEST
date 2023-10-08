@@ -22,8 +22,8 @@ namespace STMLABAPP.Services
                     listDisks.Add(new DiskInfoDto()
                     {
                         DiskName = drive.Name, 
-                        TotalSize = drive.TotalSize,
-                        BusySize = drive.TotalSize - drive.TotalFreeSpace
+                        TotalSize = ConvertToMbytes(drive.TotalSize),
+                        BusySize = ConvertToMbytes(drive.TotalSize - drive.TotalFreeSpace)
                     });
                 }
             }
@@ -32,13 +32,14 @@ namespace STMLABAPP.Services
         }
         
 
-        public async Task<DirectoryInfoDto> GetDirectoryInfo(string path)
+        public async Task<DirectoryInfoDto> GetDirectoryInfo(FindDirectoryDto dto)
         {
             var did = new DirectoryInfoDto();
-            DirectoryInfo directoryInfo = new DirectoryInfo(path);
+            DirectoryInfo directoryInfo = new DirectoryInfo(dto.Path);
 
             did.DirectoryName = directoryInfo.FullName;
             did.ContentList = new List<ContentInfoDto>();
+            did.PrevPath = directoryInfo.Parent?.FullName;
             
             foreach (var file in directoryInfo.GetFiles())
             {
@@ -49,8 +50,9 @@ namespace STMLABAPP.Services
                         ContentName = file.Name,
                         ContentType = file.Extension,
                         FullContentName = file.FullName,
-                        ContentSize = file.Length
+                        ContentSize = ConvertToMbytes(file.Length)
                     };
+                    did.DirectorySize += subfile.ContentSize;
                     did.ContentList.Add(subfile);
                 }
                 catch (Exception e)
@@ -73,8 +75,10 @@ namespace STMLABAPP.Services
                 {
                     foreach (var file in subDirectory.GetFiles())
                     {
-                        dir.ContentSize += file.Length;
+                        dir.ContentSize += ConvertToMbytes(file.Length);
                     }
+
+                    did.DirectorySize += dir.ContentSize;
                     did.ContentList.Add(dir);
                 }
                 catch (Exception e)
@@ -83,8 +87,21 @@ namespace STMLABAPP.Services
 
             }
 
-            did.ContentList = did.ContentList.OrderBy(x => x.ContentSize).ToList();
+            if (dto.OrderByDesc == false)
+            {
+                did.ContentList = did.ContentList.OrderBy(x => x.ContentSize).ToList();
+            }
+            else
+            {
+                did.ContentList = did.ContentList.OrderByDescending(x => x.ContentSize).ToList();
+            }
+            
             return did;
+        }
+
+        private long ConvertToMbytes(long size)
+        {
+            return size / (1024 * 1024);
         }
 
     }
