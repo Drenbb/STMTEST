@@ -1,0 +1,63 @@
+@using System.Text
+@model System.Collections.Generic.List<STMLABAPP.Contracts.DiskInfoDto>
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+<script src="~/js/scripts/goToRoot.js"></script>
+<style>
+    .container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+</style>
+
+<div class="row">
+    <div class="col-md-6">
+        <h2>Информация о директории</h2>
+        @foreach (var disk in Model)
+        {
+            var diskName = @disk.DiskName + @"\";
+            <button id="btnGoToRoot" data-id="@disk.DiskName" onclick="goToRoot('@diskName')">
+                <div class="container">
+                    <div >
+                        <label>@disk.DiskName</label>
+                        <progress value="@disk.BusySize" max="@disk.TotalSize"></progress>
+                    </div>
+                    <div class="row">
+                        <label>@disk.TotalSize</label>
+                        <label>@disk.BusySize</label>
+                    </div>
+                </div>
+            </button>
+        }
+    </div>
+    <div class="col-md-6">
+        <div id="frame">
+            <!-- здесь выводятся объекты контеста -->
+        </div>
+    </div>
+</div>
+
+<script>
+  function goToRoot(path) {
+      console.log(path);
+          // const buttonElements = document.getElementById('btnGoToRoot');
+          // const rootPath = buttonElements.getAttribute('data-id');
+      fetch('/Dirictory/Index', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(path)
+      })
+      .then(response => response.text())
+      .then(data => {
+          document.getElementById('frame').innerHTML = data;
+      });
+  }
+  // document.getElementById('btnGoToRoot').addEventListener('click', goToRoot);
+</script>

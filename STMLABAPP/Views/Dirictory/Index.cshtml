@@ -1,0 +1,59 @@
+@model STMLABAPP.Contracts.DirectoryInfoDto
+
+@{
+    ViewBag.Title = "title";
+}
+
+<h1>@Model.DirectoryName</h1>
+<h2>@Model.DirectorySize</h2>
+
+<style>
+    .table-container {
+        max-height: 400px; /* Задайте максимальную высоту контейнера */
+        overflow: auto; /* Добавьте ползунок прокрутки */
+    }
+    
+    header{
+    visibility: hidden;
+    }
+    
+    footer{
+    visibility: hidden;
+    }
+    
+    
+</style>
+
+<div class="table-container">
+    <table>
+        <thead>
+        <tr>
+            <th>Content Name</th>
+            <th>Content Type</th>
+            <th onclick="" >Content Size</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var dir in Model.ContentList)
+        {
+            if (dir.ContentType == "Folder")
+            {
+                <tr onclick="goToRootDir('@dir.FullContentNameCode')">
+                    <td>@dir.ContentName</td>
+                    <td>@dir.ContentType</td>
+                    <td>@dir.ContentSize</td>
+                </tr>
+            }
+            else
+            {
+                <tr>
+                    <td>@dir.ContentName</td>
+                    <td>@dir.ContentType</td>
+                    <td>@dir.ContentSize</td>
+                </tr>
+            }
+            
+        }
+        </tbody>
+    </table>
+</div>
