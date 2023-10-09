@@ -5,11 +5,11 @@ using STMLABAPP.Interfaces;
 
 namespace STMLABAPP.Controllers
 {
-    public class DirictoryController : Controller
+    public class DirectoryController : Controller
     {
         private readonly IDiskExplorerService _diskExplorerService;
 
-        public DirictoryController(IDiskExplorerService diskExplorerService)
+        public DirectoryController(IDiskExplorerService diskExplorerService)
         {
             _diskExplorerService = diskExplorerService;
         }
