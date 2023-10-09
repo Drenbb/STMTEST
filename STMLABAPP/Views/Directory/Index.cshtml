@@ -5,7 +5,7 @@
 }
 
 <h1>@Model.DirectoryName</h1>
-<h2>@Model.DirectorySize</h2>
+<h2>@Model.DirectorySize МБ</h2>
 @if (@Model.PrevPath != null)
 {
     <input type="button" value="Назад" onclick="goToRootDir('@Model.PrevPathCode',false)"></input>
@@ -46,7 +46,7 @@
                 <tr onclick="goToRootDir('@dir.FullContentNameCode')">
                     <td>@dir.ContentName</td>
                     <td>@dir.ContentType</td>
-                    <td>@dir.ContentSize</td>
+                    <td>@dir.ContentSize МБ</td>
                 </tr>
             }
             else
@@ -54,7 +54,7 @@
                 <tr>
                     <td>@dir.ContentName</td>
                     <td>@dir.ContentType</td>
-                    <td>@dir.ContentSize</td>
+                    <td>@dir.ContentSize МБ</td>
                 </tr>
             }
 
