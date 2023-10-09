@@ -4,7 +4,7 @@ function goToRootDir(path,orderBy) {
         path: decodeURI(path),
         orderByDesc: orderBy
     };
-    fetch('/Dirictory/Index', {
+    fetch('/Directory/Index', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
