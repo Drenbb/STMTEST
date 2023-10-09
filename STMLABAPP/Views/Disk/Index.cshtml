@@ -36,7 +36,6 @@
     </div>
     <div class="col-md-6">
         <div id="frame">
-            <!-- здесь выводятся объекты контеста -->
         </div>
     </div>
 </div>
@@ -46,7 +45,6 @@
       console.log(path);
       const findDirectoryDto = {
                  path: decodeURI(path),
-                 //orderByDesc: 'value2'
              };
       fetch('/Directory/Index', {
           method: 'POST',
@@ -60,5 +58,4 @@
           document.getElementById('frame').innerHTML = data;
       });
   }
-  // document.getElementById('btnGoToRoot').addEventListener('click', goToRoot);
 </script>
