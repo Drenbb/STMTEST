@@ -18,11 +18,5 @@ namespace STMLABAPP.Controllers
             var disks = await _diskExplorerService.CheckDiskSize();
             return View(disks);
         }
-        
-        // public async Task<IActionResult> DirectoryInformatuon()
-        // {
-        //     var disks = await _diskExplorerService.CheckDiskSize();
-        //     return View(disks);
-        // }
     }
 }
